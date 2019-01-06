@@ -16,50 +16,75 @@
 }
 else
 {
-    <table class="table">
-        <tr>
+    <table class="table sorting" id="pages">
+        <tr class="home">
             <th>
-               Title
+                Title
             </th>
             <th>
-               Slug
+                Slug
             </th>
             <th>
-               Sidebar
+                Sidebar
             </th>
             <th></th>
         </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Slug)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HasSidebar)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditPage", new { id = item.Id }) |
-                @Html.ActionLink("Details", "PageDetails", new { id = item.Id }) |
-                @if (item.Slug != "home")
-                {
-                    @Html.ActionLink("Delete", "DeletePage", new { id = item.Id }, new { @class = "delete" })
-                }
-            </td>
-        </tr>
-    }
+        @foreach (var item in Model)
+        {
+            <tr id="id_@item.Id" class="@item.Slug">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Slug)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HasSidebar)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditPage", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "PageDetails", new { id = item.Id }) |
+                    @if (item.Slug != "home")
+                    {
+                        @Html.ActionLink("Delete", "DeletePage", new { id = item.Id }, new { @class = "delete" })
+                    }
+                </td>
+            </tr>
+        }
     </table>
 }
 @section Scripts {
+
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+
     <script>
         $(function () {
+            /*
+             *Confirmare stergere pagina
+            */
             $("a.delete").click(function () {
                 if (!confirm("Confirma pagina stearsa")) return false;
             });
+            //////
+
+
+            /*
+             *Confirmare stergere pagina
+            */
+            $("table#pages tbody").sortable({
+                items: "tr:not(.home)",
+                paceholder: "ui-state-highlight",
+                update: function () {
+                    var ids = $("table#pages tbody").sortable("serialize");
+                    //console.log(ids);
+                    var url = "/Admin/Pages/ReorderPages";
+
+                    $.post(url, ids, function (data) {
+                    });
+                }
+            });
+            //////
         });
     </script>
-    }
+}

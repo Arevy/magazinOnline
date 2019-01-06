@@ -1,1 +1,8 @@
-﻿
+﻿.sorting tr:not(.home) { 
+    /* table.sorting tr:not(.home) aparent are conflic pe tabela*/
+    cursor: pointer;
+}
+
+.ui-state-highlight {
+    border: 3px dashed #808080; /*conflict css, nu stiu unde, nu doreste schimbarea, zona de drag and drop*/
+}
