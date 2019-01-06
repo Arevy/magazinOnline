@@ -164,7 +164,7 @@ namespace magazinOnline.Areas.Admin.Controllers
             return RedirectToAction("EditPage");
         }
 
-        //// GET: Admin/Pages/PageDetails/id
+        // GET: Admin/Pages/PageDetails/id
         public ActionResult PageDetails(int id)
         {
             // Declare PageVM
@@ -187,6 +187,24 @@ namespace magazinOnline.Areas.Admin.Controllers
 
             // Return view with model
             return View(model);
+        }
+
+        // GET: Admin/Pages/PageDetails/id
+        public ActionResult DeletePage(int id)
+        {
+            using (Db db = new Db())
+            {
+                //Cauta pagina
+                PageDTO dto = db.Pages.Find(id);
+
+                //Stergere pagina
+                db.Pages.Remove(dto);
+
+                //Salvare
+                db.SaveChanges();
+            }
+            //Redirectionare
+            return RedirectToAction("Index");
         }
     }
 }
