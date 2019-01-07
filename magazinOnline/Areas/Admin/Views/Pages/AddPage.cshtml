@@ -67,3 +67,11 @@
 <div>
     @Html.ActionLink("Inapoi la pagini", "Index")
 </div>
+
+
+@section Scripts {
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace("Body");
+    </script>
+}
