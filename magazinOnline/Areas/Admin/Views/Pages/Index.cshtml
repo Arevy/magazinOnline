@@ -18,7 +18,7 @@ else
 {
     <table class="table sorting" id="pages">
         <tr class="home">
-            <th>
+            <th>  
                 Title
             </th>
             <th>
@@ -70,11 +70,11 @@ else
 
 
             /*
-             *Confirmare stergere pagina
+             Reordonare pagini
             */
             $("table#pages tbody").sortable({
                 items: "tr:not(.home)",
-                paceholder: "ui-state-highlight",
+                placeholder: "ui-state-highlight",
                 update: function () {
                     var ids = $("table#pages tbody").sortable("serialize");
                     //console.log(ids);

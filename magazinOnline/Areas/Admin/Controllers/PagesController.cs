@@ -10,7 +10,9 @@ namespace magazinOnline.Areas.Admin.Controllers
 {
     public class PagesController : Controller
     {
+/*#pragma warning disable IDE0044 // Add readonly modifier
         private object[] id;
+#pragma warning restore IDE0044 // Add readonly modifier */
 
         // GET: Admin/Pages
         public ActionResult Index()
