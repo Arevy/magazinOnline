@@ -24,7 +24,7 @@ namespace magazinOnline.Areas.Admin.Controllers
 
             }
             //returneaza View-ul
-                return View(pagesList);
+            return View(pagesList);
         }
         // GET: Admin/Pages/AddPage
         [HttpGet]
@@ -189,7 +189,7 @@ namespace magazinOnline.Areas.Admin.Controllers
             return View(model);
         }
 
-        // GET: Admin/Pages/PageDetails/id
+        // GET: Admin/Pages/DeletePage/id
         public ActionResult DeletePage(int id)
         {
             using (Db db = new Db())
@@ -211,7 +211,7 @@ namespace magazinOnline.Areas.Admin.Controllers
         [HttpPost]
         public void ReorderPages(int[] id)
         {
-            using(Db db = new Db())
+            using (Db db = new Db())
             {
                 //Setez ordinea initiala
                 int count = 1;
@@ -220,7 +220,7 @@ namespace magazinOnline.Areas.Admin.Controllers
                 PageDTO dto;
 
                 //Setare pentru sortarea fiecarei pagini
-                foreach(var pageId in id)
+                foreach (var pageId in id)
                 {
                     dto = db.Pages.Find(pageId);
                     dto.Sorting = count;
@@ -229,7 +229,51 @@ namespace magazinOnline.Areas.Admin.Controllers
                     count++;
                 }
             }
-           
+
+        }
+
+        // GET: Admin/Pages/EditSidebar/id
+        [HttpGet]
+        public ActionResult EditSidebar()
+        {
+            //Declare model
+            SidebarVM model;
+
+            using (Db db = new Db())
+            {
+
+                //Get the DTO
+                SidebarDTO dto = db.Sidebar.Find(1);
+                //Init model
+                model = new SidebarVM(dto);
+
+            }
+            //Return view with model
+            return View(model);
+        }
+
+        //POST: Admin/Pages/EditSidebar
+        [HttpPost]
+        public ActionResult EditSidebar(SidebarVM model)
+        {
+            using (Db db = new Db())
+            {
+
+                //Get the DTO
+                SidebarDTO dto = db.Sidebar.Find(1);
+                //DTO the body
+                dto.Body = model.Body;
+
+                //Save
+                db.SaveChanges();
+            }
+
+            //Set TempData message
+            TempData["SM"] = "Ai editat sidebar-ul";
+
+            //Redirect
+
+            return RedirectToAction("EditSidebar");
         }
     }
 }
